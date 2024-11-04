@@ -14,13 +14,13 @@ typedef struct{
 	int matricula;
 }aluno;
 
-
+//função que cadastra o aluno
  void cadastrar(){
 	aluno cadastro;
-	FILE *arquivo= fopen("aluno.txt", "a");
+	FILE *arquivo= fopen("aluno.txt", "a");//abrir um ponteiro do tipo FILE pra criar o arquivo
 
     if (arquivo == NULL){
-    	printf("Erro ao abrir o arquivo.\n");
+    	printf("Erro ao abrir o arquivo.\n");//condição NULL
     	return;
 	}
 	
@@ -44,36 +44,74 @@ typedef struct{
 	//print resultado  
     printf("\nNome: %s Idade: %d\n Curso: %s Matricula: %d\n", cadastro.nome, cadastro.idade, cadastro.curso, cadastro.matricula);
     
-    //Salvar no arquivo
+    //Salvar no arquivo.txt
 	fprintf(arquivo, "%s%d\n%s%d\n", cadastro.nome, cadastro.idade, cadastro.curso, cadastro.matricula);
 	
+	//resultado na tela avisando que foi salvo com sucesso
 	printf("\nSalvo com sucesso\n");   
 	fclose(arquivo);
 	
 }
 
+//função que lista a quantidade de alunos cadastrados 
 void listar(){
- FILE *arquivo = fopen("aluno.txt", "r");
+ FILE *arquivo = fopen("aluno.txt", "r");//abrir o arquivo.txt para leitura 
  aluno cadastro;
  
  if (arquivo == NULL){
  		printf("Erro ao abrir o arquivo.\n");
     	return;
  }
+    //scanear e imprimir os produtos listados
 	printf("Lista de Alunos Cadastrados: \n");
 	 while (fgets(cadastro.nome, 100, arquivo) != NULL) {
         fscanf(arquivo, "%d\n", &cadastro.idade);  
 		fgets(cadastro.curso, 200, arquivo);
 	    fscanf(arquivo, "%d\n", &cadastro.matricula);
 
-        // Imprime os dados do aluno
+        
         printf("\n\tNome: %s", cadastro.nome);
         printf("\n\tIdade: %d\n", cadastro.idade);
         printf("\tCurso: %s", cadastro.curso);
         printf("\tMatricula: %d\n", cadastro.matricula);
     }
 	
-	
+
+}
+
+void pesquisar(){
+ FILE *arquivo = fopen("aluno.txt", "r");
+ char pesq[100];
+ aluno cadastro ;
+ int found = 0;
+ 
+ if (arquivo == NULL){
+ 	printf("Erro ao abrir o arquivo. \n");
+ 	return;
+ }
+ 
+ printf("Digite o nome do aluno: \n");
+  fgets(pesq, 100, stdin);
+ getchar();
+      
+	  while (fgets(cadastro.nome, 100, arquivo) != NULL) {
+        fscanf(arquivo, "%d\n", &cadastro.idade);  
+		fgets(cadastro.curso, 200, arquivo);
+	    fscanf(arquivo, "%d\n", &cadastro.matricula);
+
+     if (strstr(cadastro.nome, pesq) != NULL) {
+            printf("\n\tNome: %s", cadastro.nome);
+            printf("\tIdade: %d\n", cadastro.idade);
+            printf("\tCurso: %s", cadastro.curso);
+            printf("\tMatrícula: %d\n", cadastro.matricula);
+            found = 1;
+	 }
+}
+     if(!found){
+     	printf("Aluno não encontrado. \n");
+	 }
+
+    fclose(arquivo);
 }
 
 
@@ -94,6 +132,9 @@ do {
 		  break;
 		case 2:
            listar();
+            break;
+		case 3:
+		   pesquisar();   
 			break;
 		default:
 		   printf("selecao inexistente.\n");
