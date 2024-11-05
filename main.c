@@ -79,26 +79,29 @@ void listar(){
 
 }
 
+//função para fazer a pesquisar do aluno desejado
 void pesquisar(){
- FILE *arquivo = fopen("aluno.txt", "r");
- char pesq[100];
- aluno cadastro ;
- int found = 0;
+ FILE *arquivo = fopen("aluno.txt", "r");   //abrindo o arquivo no modo leitura
+ char pesq[100]; //    variavel usada para buscar pesquisa
+ aluno cadastro ; //   struct cadastro 
+ int found = 0; //   retornar o que foi encontrado
  
  if (arquivo == NULL){
  	printf("Erro ao abrir o arquivo. \n");
  	return;
  }
  
- printf("Digite o nome do aluno: \n");
+ printf("Digite o nome do aluno: \n");   // print do tipo char pra receber o aluno que se procura
   fgets(pesq, 100, stdin);
- getchar();
+ getchar(); // limpa o buffer do teclado
       
+      // while para scanear dentro do arquivo.txt 
 	  while (fgets(cadastro.nome, 100, arquivo) != NULL) {
         fscanf(arquivo, "%d\n", &cadastro.idade);  
 		fgets(cadastro.curso, 200, arquivo);
 	    fscanf(arquivo, "%d\n", &cadastro.matricula);
-
+      
+     // usar um strstr para buscar o nome do aluno inserido na variavel pesq dentro das variaveis do aluno e imprimir o que foi encontrado  
      if (strstr(cadastro.nome, pesq) != NULL) {
             printf("\n\tNome: %s", cadastro.nome);
             printf("\tIdade: %d\n", cadastro.idade);
@@ -106,7 +109,8 @@ void pesquisar(){
             printf("\tMatrícula: %d\n", cadastro.matricula);
             found = 1;
 	 }
-}
+}     
+     //se nao encontrar o nome que foi inserido imprimir na tela que não foi encontrado
      if(!found){
      	printf("Aluno não encontrado. \n");
 	 }
@@ -136,7 +140,16 @@ do {
 		case 3:
 		   pesquisar();   
 			break;
-		default:
+		case 4:
+				
+			break;
+		case 5:
+				
+ 	         	break;		
+		case 6:
+	           printf("Desligando.. \n");
+		    break;		
+		default:		
 		   printf("selecao inexistente.\n");
 		    break;
 	}
@@ -145,7 +158,7 @@ do {
 
 system("pause");
 
-}while(selecionado <= 6);
+}while(selecionado != 6 );
 
 	return 0;
 }
