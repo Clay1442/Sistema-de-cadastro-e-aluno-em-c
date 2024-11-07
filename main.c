@@ -57,7 +57,7 @@ typedef struct{
 void listar(){
  FILE *arquivo = fopen("aluno.txt", "r");//abrir o arquivo.txt para leitura 
  aluno cadastro;
- 
+ int found = 0;
  if (arquivo == NULL){
  		printf("Erro ao abrir o arquivo.\n");
     	return;
@@ -74,12 +74,17 @@ void listar(){
         printf("\n\tIdade: %d\n", cadastro.idade);
         printf("\tCurso: %s", cadastro.curso);
         printf("\tMatricula: %d\n", cadastro.matricula);
+        found = 1;
     }
-	
-
+    
+	if(!found){
+		printf("Nenhum aluno registrado. \n\n");
+	}
+ 
+  fclose(arquivo);
 }
 
-//função para fazer a pesquisar do aluno desejado
+//função para fazer a pesquisa do aluno desejado
 void pesquisar(){
  FILE *arquivo = fopen("aluno.txt", "r");   //abrindo o arquivo no modo leitura
  char pesq[100]; //    variavel usada para buscar pesquisa
@@ -115,8 +120,52 @@ void pesquisar(){
      	printf("Aluno não encontrado. \n");
 	 }
 
-    fclose(arquivo);
+    fclose(arquivo);//Fechar arquivo 
 }
+
+void excluir(){
+ FILE *arquivo = fopen("aluno.txt", "r");
+ FILE *arquivoModificado = fopen("alunoTemporario.txt", "w" );
+ aluno cadastro;
+ int exmatricula;
+ int found = 0;
+ 
+ 
+ if (arquivo == NULL || arquivoModificado == NULL) {
+ 	printf("Erro ao abrir o arquivo. \n");
+    getchar();
+ }
+ 
+   printf("Digite o numero de matricula que deseja excluir: \n");
+   scanf("%d", &exmatricula);
+
+ 
+ while(fgets(cadastro.nome, 100, arquivo) != NULL) {
+    fscanf(arquivo, "%d\n", &cadastro.idade);
+    fgets(cadastro.curso, 200, arquivo);
+	fscanf(arquivo, "%d\n", &cadastro.matricula);    
+		  
+		  if (cadastro.matricula != exmatricula) {
+            fprintf(arquivoModificado, "%s%d\n%s%d\n", cadastro.nome, cadastro.idade, cadastro.curso, cadastro.matricula);
+        } else {
+	         found = 1;	
+	         printf("Matrícula excluída! \n");
+		}    
+      }
+   
+   fclose(arquivo);
+   fclose(arquivoModificado);
+   remove("aluno.txt");
+   rename("alunoTemporario.txt", "aluno.txt");
+   
+   if(!found){
+   	printf("Matrícula não encontrada. \n");
+   }
+}
+ 
+
+
+
 
 
 
@@ -144,11 +193,11 @@ do {
 				
 			break;
 		case 5:
-				
- 	         	break;		
+			excluir();	
+				break;		
 		case 6:
-	           printf("Desligando.. \n");
-		    break;		
+			printf("Desligando.. \n");
+				break;		
 		default:		
 		   printf("selecao inexistente.\n");
 		    break;
