@@ -163,8 +163,57 @@ void excluir(){
    }
 }
  
+void editar(){ 
+ FILE *arquivo = fopen("aluno.txt", "r");
+ FILE *arquivoModificado = fopen("alunoTemporario.txt", "w" );	
+ aluno cadastro;
+ int editar;
+ int found = 0;	
+	
+  if (arquivo == NULL || arquivoModificado == NULL) {
+ 	printf("Erro ao abrir o arquivo. \n");
+    getchar();
+  }
+ 
+  printf("Digite o numero de matricula que deseja editar: \n");
+ scanf("%d", &editar);
+ getchar();
 
+ while(fgets(cadastro.nome, 100, arquivo) != NULL) {
+    fscanf(arquivo, "%d\n", &cadastro.idade);
+    fgets(cadastro.curso, 200, arquivo);
+	fscanf(arquivo, "%d\n", &cadastro.matricula);    
+		  
+    if(cadastro.matricula == editar){
+    found = 1;
+			printf("Digite o novo nome do aluno: \n");
+			fgets(cadastro.nome, 100, stdin);
+			
+			printf("Digite a nova idade:\n");
+			scanf("%d", &cadastro.idade);
+			getchar();
+			
+			printf("Digite o novo nome do curso: \n");
+			fgets(cadastro.curso, 200, stdin);
+			
+			printf("Digite a nova matrícula:\n");
+			scanf("%d", &cadastro.matricula);
+			getchar(); 	
+    	}
+    	fprintf(arquivoModificado, "%s%d\n%s%d\n", cadastro.nome, cadastro.idade, cadastro.curso, cadastro.matricula);
+	}
 
+    fclose(arquivo);
+	fclose(arquivoModificado);
+	remove("aluno.txt");
+	rename("alunoTemporario.txt", "aluno.txt");
+
+	if (found) {
+		printf("Aluno editado com sucesso!\n");
+	} else {
+		printf("Matrícula não encontrada.\n");
+	}
+}
 
 
 
@@ -190,7 +239,7 @@ do {
 		   pesquisar();   
 			break;
 		case 4:
-				
+			editar();	
 			break;
 		case 5:
 			excluir();	
