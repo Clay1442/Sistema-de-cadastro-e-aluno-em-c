@@ -194,7 +194,11 @@ void excluir(){
    scanf("%d", &exmatricula);
 
 //leitura de dados usando while 
+<<<<<<< Updated upstream
  while(fgets(cadastro.nome, 100, arquivo) != NULL) {
+=======
+ while(fgets(cadastro.nome, 100, arquivo) != NULL) {0
+>>>>>>> Stashed changes
     fscanf(arquivo, "%d\n", &cadastro.idade);
     fgets(cadastro.curso, 200, arquivo);
 	fscanf(arquivo, "%d\n", &cadastro.matricula);    
@@ -208,9 +212,15 @@ void excluir(){
 		}    
       }
    
+<<<<<<< Updated upstream
    fclose(arquivo);            //fechando arquivo 
    fclose(arquivoModificado);   //fechando o arquivoModificado
    remove("aluno.txt");     //removendo o arquivo
+=======
+   fclose(arquivo); //fechando arquivo 
+   fclose(arquivoModificado); //fechando o arquivoModificado
+   remove("aluno.txt");  //removendo o arquivo
+>>>>>>> Stashed changes
    rename("alunoTemporario.txt", "aluno.txt"); //renomeando aluno temporario para aluno
    
    //caso found seja diferente de 1 printa que não foi encontrado o arquivo
@@ -223,15 +233,25 @@ void excluir(){
 void editar(){ 
  FILE *arquivo = fopen("aluno.txt", "r");  //abrindo o arquivo em modo de leitura
  FILE *arquivoModificado = fopen("alunoTemporario.txt", "w" );	//abrindo o arquivoModificado em modo de escrita 
+<<<<<<< Updated upstream
  aluno cadastro;  
  int editar; // variavel para pesquisar e auxiliar a variavel aluno
  int found = 0;	// variavel que verifica se o codigo funcionou ou não
+=======
+ aluno cadastro;
+ int editar;
+ int found = 0;	
+>>>>>>> Stashed changes
 	
   if (arquivo == NULL || arquivoModificado == NULL) {
  	printf("Erro ao abrir o arquivo. \n");
     getchar();
   }
+<<<<<<< Updated upstream
  //printando a variavel editar
+=======
+ //printando a variavel arquivo
+>>>>>>> Stashed changes
   printf("Digite o numero de matricula que deseja editar: \n");
  scanf("%d", &editar);
  getchar();
@@ -272,4 +292,55 @@ void editar(){
 	} else {
 		printf("Matrícula não encontrada.\n"); // variavel foun igual a falso printa que não encotrou matricula
 	}
+<<<<<<< Updated upstream
 }    // fim da função editar
+=======
+}
+
+
+
+
+int main(int argc, char *argv[]) {
+    
+    int selecionado; //variavel que seleciona a função  
+    
+do {    
+   printf("\nBem vindo ao painel de cadastro de aluno\n");
+   printf("Selecione o que deseja digitando o numero: \n\n 1.Cadastrar \n 2.Listar \n 3.Pesquisar \n 4.Editar \n 5.Excluir \n 6.Desligar \n");
+         scanf("%d", &selecionado);   
+          getchar(); // Consome o '\n' deixado pelo scanf
+         
+    switch(selecionado){
+       case 1:
+	      cadastrar();
+		  break;
+		case 2:
+           listar();
+            break;
+		case 3:
+		   pesquisar();   
+			break;
+		case 4:
+			editar();	
+			break;
+		case 5:
+			excluir();	
+				break;		
+		case 6:
+			printf("Desligando.. \n");
+				break;		
+		default:		
+		   printf("selecao inexistente.\n");
+		    break;
+	}
+         
+         
+
+system("pause");
+
+}while(selecionado != 6 );
+
+	return 0;
+}
+
+>>>>>>> Stashed changes
